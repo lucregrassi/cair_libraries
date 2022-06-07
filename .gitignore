@@ -1,1 +1,4 @@
 tests
+cairlib.egg-info
+dist
+build
