@@ -99,7 +99,7 @@ class Utils(object):
             json.dump(dialogue_statistics.to_dict(), f, ensure_ascii=False, indent=4)
 
         # Add the info of the new profile to the file where the key is the profile id and the values are the info (name)
-        user_gender = new_speaker_info.gender.translate(None, string.punctuation).lower()
+        user_gender = new_speaker_info.gender.translate(str.maketrans('', '', string.punctuation)).lower()
         female_list = ["female", "femmina", "femminile", "donna"]
         male_list = ["male", "maschio", "maschile", "uomo"]
         if any(word in user_gender for word in female_list):

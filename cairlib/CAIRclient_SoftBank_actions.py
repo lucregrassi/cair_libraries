@@ -11,8 +11,6 @@ class ActionManager(object):
         self.logger = logger
         self.behavior_manager = ALProxy("ALBehaviorManager")
         self.memory = ALProxy("ALMemory")
-        self.animated_speech = ALProxy("ALAnimatedSpeech")
-        self.configuration = {"bodyLanguageMode": "contextual"}
         self.tablet = True
         try:
             self.tablet_service = ALProxy("ALTabletService")
