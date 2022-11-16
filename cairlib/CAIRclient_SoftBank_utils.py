@@ -1,3 +1,5 @@
+#!usr/bin/python -tt
+# -*- coding: utf-8 -*-
 from cairlib.DialogueStatistics import DialogueStatistics
 from cairlib.SpeakerInfo import SpeakerInfo
 import requests

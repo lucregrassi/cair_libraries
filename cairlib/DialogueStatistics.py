@@ -55,9 +55,10 @@ class DialogueStatistics:
             speaker_index = self.mapping_index_speaker.index(profile_id)
             n_turns = self.speakers_turns[speaker_index]
             self.speakers_turns[speaker_index] = n_turns + 1
-            # Add the id of the speaker who talked in the latest turns list - delete first element if exceeds size
-            if len(self.latest_turns) > community_turns:
+            # Ensure that the length of the latest turns array does not exceed the maximum one
+            while len(self.latest_turns) > community_turns:
                 self.latest_turns.pop(0)
+            # Add the id of the last speaker at the end of the list
             print("Adding", profile_id, "to latest turns")
             self.latest_turns.append(profile_id)
 
