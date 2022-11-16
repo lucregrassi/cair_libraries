@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 from cairlib.DialogueStatistics import DialogueStatistics
 from cairlib.SpeakerInfo import SpeakerInfo
+import qi
+from naoqi import ALProxy
 import requests
 import json
 import time
