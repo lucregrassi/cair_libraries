@@ -30,7 +30,6 @@ class Utils:
     def acquire_initial_state(self, language):
         # Try to contact the server and retry until the dialogue state is received
         resp = requests.get(self.request_uri, verify=False)
-        print(resp)
         first_dialogue_sentence = resp.json()["first_sentence"]
         dialogue_state = resp.json()['dialogue_state']
     
