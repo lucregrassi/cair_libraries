@@ -27,7 +27,7 @@ class Utils:
 
     # This method performs a GET request to the cloud to get the initial sentence and the dialogue state that will be used
     # for all the speakers. Then, it initializes the speakers stats and speakers info data for the unknown speaker
-    def acquire_initial_state(self):
+    def acquire_initial_state(self, language):
         # Try to contact the server and retry until the dialogue state is received
         resp = requests.get(self.request_uri, verify=False)
         print(resp)
