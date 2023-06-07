@@ -109,16 +109,7 @@ class Utils:
         print(to_say)
         client_registration_socket.send(b"new_profile_gender")
         new_profile_gender = client_registration_socket.recv(256).decode('utf-8')
-        # Add the info of the new profile to the file where the key is the profile id and the values are the info (name)
-        print("GENDER", new_profile_gender)
-        female_list = ["female", "femmina", "femminile", "donna"]
-        male_list = ["male", "maschio", "maschile", "uomo"]
-        if any(word in new_profile_gender for word in female_list):
-            new_profile_gender = "f"
-        elif any(word in new_profile_gender for word in male_list):
-            new_profile_gender = "m"
-        else:
-            new_profile_gender = "nb"
+        print("RECEIVED GENDER:", new_profile_gender)
         
         # ** STEP 4 ** Ask the user to talk for 20 seconds
         if self.language == "it":
