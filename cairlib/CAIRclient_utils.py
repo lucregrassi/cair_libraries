@@ -110,7 +110,6 @@ class Utils:
         client_registration_socket.send(b"new_profile_gender")
         new_profile_gender = client_registration_socket.recv(256).decode('utf-8')
         # Add the info of the new profile to the file where the key is the profile id and the values are the info (name)
-        new_profile_gender = new_profile_gender.translate(str.maketrans('', '', string.punctuation)).lower()
         print("GENDER", new_profile_gender)
         female_list = ["female", "femmina", "femminile", "donna"]
         male_list = ["male", "maschio", "maschile", "uomo"]
