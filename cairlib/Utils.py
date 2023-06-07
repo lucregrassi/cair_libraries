@@ -269,29 +269,34 @@ class Utils:
         # If the pattern is finished, choose among children - descend the tree
         else:
             print("** EMPTY PATTERN **")
-            # The user answered no
-            if negative:
-                # If the user said no twice
-                if prev_topic_stop:
-                    # Do not allow choosing father's brothers with likeliness zero
-                    # topic_n = choose_topic(topics_brothers[topics_father[prev_topic_number]], topics_likeliness, False)
-                    # Do not jump further - end conversation
-                    topic_n = -1
-                    prev_topic_stop = False
-                    # print("Second NEGATIVE answer: CHOOSE NEW TOPIC AMONG FATHER's BROTHERS")
-                    print("Second NEGATIVE answer: END CONVERSATION")
+            # TODO: this has to be fixed because it should not happen, this is a quick fix to avoid errors
+            # prev_topic_number should never be -1
+            if prev_topic_number != -1:
+                # The user answered no
+                if negative:
+                    # If the user said no twice
+                    if prev_topic_stop:
+                        # Do not allow choosing father's brothers with likeliness zero
+                        # topic_n = choose_topic(topics_brothers[topics_father[prev_topic_number]], topics_likeliness, False)
+                        # Do not jump further - end conversation
+                        topic_n = -1
+                        prev_topic_stop = False
+                        # print("Second NEGATIVE answer: CHOOSE NEW TOPIC AMONG FATHER's BROTHERS")
+                        print("Second NEGATIVE answer: END CONVERSATION")
+                    else:
+                        # Do not allow choosing brothers with likeliness zero
+                        topic_n = self.incremental_likeliness_based_choice(ontology.topics_brothers[prev_topic_number],
+                                                                           topics_likeliness, False)
+                        prev_topic_stop = True
+                        print("First NEGATIVE answer: CHOOSE NEW TOPIC AMONG BROTHERS")
                 else:
-                    # Do not allow choosing brothers with likeliness zero
-                    topic_n = self.incremental_likeliness_based_choice(ontology.topics_brothers[prev_topic_number],
+                    # Do not allow choosing children with likeliness zero
+                    topic_n = self.incremental_likeliness_based_choice(ontology.topics_children[prev_topic_number],
                                                                        topics_likeliness, False)
-                    prev_topic_stop = True
-                    print("First NEGATIVE answer: CHOOSE NEW TOPIC AMONG BROTHERS")
+                    print("** DESCEND THE DT: CHOOSE NEW TOPIC AMONG CHILDREN")
             else:
-                # Do not allow choosing children with likeliness zero
-                topic_n = self.incremental_likeliness_based_choice(ontology.topics_children[prev_topic_number],
-                                                                   topics_likeliness, False)
-                print("** DESCEND THE DT: CHOOSE NEW TOPIC AMONG CHILDREN")
-
+                # set topic_n to -1
+                topic_n = prev_topic_number
             # If there are children/brothers with likeliness != 0, jump to one of them
             if topic_n != -1:
                 prev_topic_number = topic_n
@@ -370,6 +375,7 @@ class Utils:
     # This function explores the DT based on the pattern. If the pattern is empty (the current topic is over), this 
     # function chooses a new topic and a new pattern for the topic (always starting with a question)
     def explore_DT_openai(self, prev_topic_number, prev_topic_pattern, prev_topic_stop, ontology, topics_likeliness, negative):
+        print("Prev topic number:", prev_topic_number)
         # If the pattern is not finished, continue
         if prev_topic_pattern:
             print("Previous topic still has a pattern: ", prev_topic_pattern)
