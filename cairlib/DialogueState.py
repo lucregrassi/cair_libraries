@@ -4,8 +4,10 @@ import copy
 class DialogueState:
     def __init__(self, d=None):
         self.dialogue_sentence = None
+        self.prev_dialogue_sentence = None
         self.addressed_speaker = None
         self.topic = None
+        self.prev_topic = None
         self.sentence_type = None
         self.pattern = None
         self.bool = None
