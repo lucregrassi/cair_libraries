@@ -29,6 +29,17 @@ class Utils:
                     elem[1] = elem[1].replace("ə", "")
         return sentence
 
+    def replace_schwa_in_string(self, sentence, speakers_info, current_speaker_id):
+        if "ə" in sentence:
+            if speakers_info[current_speaker_id]["gender"] == "f":
+                schwa_replacement = "a"
+            elif speakers_info[current_speaker_id]["gender"] == "m":
+                schwa_replacement = "o"
+            else:
+                schwa_replacement = ""
+            sentence = sentence.replace("ə", schwa_replacement)
+        return sentence
+
     def replace_speaker_name(self, sentence):
         # Substitute the speaker name in place of the user id
         # The reply of the Dialogue Manager should never be empty
