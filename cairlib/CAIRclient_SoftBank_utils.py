@@ -37,6 +37,12 @@ class Utils(object):
             self.memory.insertData("CAIR/voice_speed", 80)
             self.voice_speed = "\\RSPD=80\\"
 
+    def process_sentence(self, sentence):
+        dialogue_sentence1 = self.dialogue_sentence
+        dialogue_sentence1 = self.utils.replace_schwa(dialogue_sentence1, self.speakers_info)
+        dialogue_sentence1_str = self.utils.compose_sentence(dialogue_sentence1)
+        dialogue_sentence1_str = self.utils.replace_speaker_name(dialogue_sentence1_str, self.speakers_info)
+        
     def replace_schwa(self, sentence, speakers_info):
         # Loop over the elements of the list containing the pieces of the sentence along with their type to replace
         # names and, eventually, schwas
