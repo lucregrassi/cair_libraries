@@ -13,11 +13,11 @@ class Utils:
         self.server_ip = server_ip
         self.registration_ip = registration_ip
         
-    def process_sentence(self, sentence):
-        dialogue_sentence1 = self.dialogue_sentence
-        dialogue_sentence1 = self.utils.replace_schwa(dialogue_sentence1, self.speakers_info)
-        dialogue_sentence1_str = self.utils.compose_sentence(dialogue_sentence1)
-        dialogue_sentence1_str = self.utils.replace_speaker_name(dialogue_sentence1_str, self.speakers_info)
+    def process_sentence(self, sentence, speakers_info):
+        sentence = self.replace_schwa(sentence, speakers_info)
+        sentence_str = self.compose_sentence(sentence)
+        sentence_str = self.replace_speaker_name(sentence_str, speakers_info)
+        return sentence_str
         
     def replace_schwa(self, sentence, speakers_info):
         # Loop over the elements of the list containing the pieces of the sentence along with their type to replace
