@@ -20,6 +20,7 @@ class Utils(object):
         self.server_ip = self.memory.getData("CAIR/server_ip")
         self.registration_ip = self.memory.getData("CAIR/registration_ip")
         self.app_name = self.memory.getData("CAIR/app_name")
+        self.server_port = self.memory.getData("CAIR/server_port")
         self.al = ALProxy("ALAutonomousLife")
         self.animated_speech = ALProxy("ALAnimatedSpeech")
         self.configuration = {"bodyLanguageMode": "contextual"}
@@ -101,7 +102,7 @@ class Utils(object):
     def acquire_initial_state(self):
         # Registration of the first "unknown" user
         # Try to contact the server
-        resp = requests.get("http://" + self.server_ip + ":5000/CAIR_hub", verify=False)
+        resp = requests.get("http://" + self.server_ip + ":" + self.server_port + "/CAIR_hub", verify=False)
         first_dialogue_sentence = resp.json()["first_sentence"]
         dialogue_state = resp.json()['dialogue_state']
 
@@ -110,7 +111,7 @@ class Utils(object):
             self.animated_speech.say(self.voice_speed + "I'm waiting for the server...", self.configuration)
             # Keep on trying to perform requests to the server until it is reachable.
             while not dialogue_state:
-                resp = requests.get("http://" + self.server_ip + ":5000/CAIR_hub", verify=False)
+                resp = requests.get("http://" + self.server_ip + ":" + self.server_port + "/CAIR_hub", verify=False)
                 dialogue_state = resp.json()['dialogue_state']
                 time.sleep(1)
         # Store the dialogue state in the corresponding file
