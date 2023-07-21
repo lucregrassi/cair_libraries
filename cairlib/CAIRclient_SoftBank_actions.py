@@ -6,14 +6,14 @@ import re
 
 
 class ActionManager(object):
-    def __init__(self, logger, server_ip):
+    def __init__(self, logger):
         super(ActionManager, self).__init__()
         self.logger = logger
-        self.server_ip = server_ip
+        self.memory = ALProxy("ALMemory")
+        self.server_ip = self.memory.getData("CAIR/server_ip")
         self.behavior_manager = ALProxy("ALBehaviorManager")
         self.animated_speech = ALProxy("ALAnimatedSpeech")
         self.configuration = {"bodyLanguageMode": "contextual"}
-        self.memory = ALProxy("ALMemory")
         self.tablet = True
         try:
             self.tablet_service = ALProxy("ALTabletService")

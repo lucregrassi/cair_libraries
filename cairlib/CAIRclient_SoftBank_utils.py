@@ -12,21 +12,22 @@ import string
 
 
 class Utils(object):
-    def __init__(self, logger, app_name, language, server_ip, registration_ip):
+    def __init__(self, logger):
         super(Utils, self).__init__()
         self.logger = logger
-        self.language = language
-        self.server_ip = server_ip
-        self.registration_ip = registration_ip
-        self.al = ALProxy("ALAutonomousLife")
         self.memory = ALProxy("ALMemory")
+        self.language = self.memory.getData("CAIR/language")
+        self.server_ip = self.memory.getData("CAIR/server_ip")
+        self.registration_ip = self.memory.getData("CAIR/registration_ip")
+        self.app_name = self.memory.getData("CAIR/app_name")
+        self.al = ALProxy("ALAutonomousLife")
         self.animated_speech = ALProxy("ALAnimatedSpeech")
         self.configuration = {"bodyLanguageMode": "contextual"}
-        self.dialogue_state_file_path = "/data/home/nao/.local/share/PackageManager/apps/" + app_name + \
+        self.dialogue_state_file_path = "/data/home/nao/.local/share/PackageManager/apps/" + self.app_name + \
                                         "/dialogue_state.json"
-        self.speakers_info_file_path = "/data/home/nao/.local/share/PackageManager/apps/" + app_name + \
+        self.speakers_info_file_path = "/data/home/nao/.local/share/PackageManager/apps/" + self.app_name + \
                                        "/speakers_info.json"
-        self.dialogue_statistics_file_path = "/data/home/nao/.local/share/PackageManager/apps/" + app_name + \
+        self.dialogue_statistics_file_path = "/data/home/nao/.local/share/PackageManager/apps/" + self.app_name + \
                                              "/dialogue_statistics.json"
 
         try:
