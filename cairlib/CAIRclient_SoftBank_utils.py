@@ -37,13 +37,13 @@ class Utils(object):
             self.memory.insertData("CAIR/voice_speed", 80)
             self.voice_speed = "\\RSPD=80\\"
 
-    def replace_schwa(self, sentence):
+    def replace_schwa(self, sentence, speakers_info):
         # Loop over the elements of the list containing the pieces of the sentence along with their type to replace
         # names and, eventually, schwas
         for elem in sentence:
-            gender = self.speakers_info[elem[2]]["gender"]
+            gender = speakers_info[elem[2]]["gender"]
             if "$" in elem[1]:
-                elem[1] = elem[1].replace("$" + elem[2], self.speakers_info[elem[2]]["name"])
+                elem[1] = elem[1].replace("$" + elem[2], speakers_info[elem[2]]["name"])
             if "ə" in elem[1]:
                 if gender == "f":
                     elem[1] = elem[1].replace("ə", "a")
@@ -63,14 +63,14 @@ class Utils(object):
                 schwa_replacement = ""
             sentence = sentence.replace("ə", schwa_replacement)
         return sentence
-    
-    def replace_speaker_name(self, sentence):
+
+    def replace_speaker_name(self, sentence, speakers_info):
         # Substitute the speaker name in place of the user id
         # The reply of the Dialogue Manager should never be empty
         if "$" in sentence:
-            for prof_id in self.speakers_info:
+            for prof_id in speakers_info:
                 if prof_id in sentence:
-                    sentence = sentence.replace("$" + prof_id, self.speakers_info[prof_id]["name"])
+                    sentence = sentence.replace("$" + prof_id, speakers_info[prof_id]["name"])
         return sentence
     
     def setAutonomousAbilities(self, blinking, background, awareness, listening, speaking):
