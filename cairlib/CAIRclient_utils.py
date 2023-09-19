@@ -90,7 +90,7 @@ class Utils:
         profile_id = "00000000-0000-0000-0000-000000000000"
         # Add the info of the new profile to the file where the key is the profile id and the values are the info (name)
         with open("speakers_info.json", 'w') as f:
-            if language  == "it":
+            if self.language  == "it":
                 user_name = "Utente"
             else:
                 user_name = "User"
