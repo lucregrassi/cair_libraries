@@ -14,6 +14,7 @@ class DialogueState:
         self.likelinesses = None
         self.flags = None
         self.addressed_community = None
+        self.dialogue_nuances = None
         self.__dict__ = copy.deepcopy(d)
 
     def to_dict(self):
