@@ -17,7 +17,6 @@ class Utils:
     def process_sentence(self, sentence, speakers_info):
         sentence = self.replace_schwa(sentence, speakers_info)
         sentence_str = self.compose_sentence(sentence)
-        sentence_str = self.replace_speaker_name(sentence_str, speakers_info)
         return sentence_str
 
     def replace_schwa(self, sentence, speakers_info):
