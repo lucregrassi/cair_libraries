@@ -9,7 +9,7 @@ import os
 import rospkg
 
 rp = rospkg.RosPack()
-package_path = rp.get_path('cairclient_vision')
+package_path = rp.get_path('cairclient_alterego_vision')
 print(package_path)
 folder_path = package_path + "/common"
 
