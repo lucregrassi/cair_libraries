@@ -75,13 +75,15 @@ class DialogueNuances:
                           "place": self.place_flags.astype(int).tolist(),
                           "tone": self.tone_flags.astype(int).tolist(),
                           "positive_speech_act": self.positive_speech_act_flags.astype(int).tolist(),
-                          "contextual_speech_act": self.contextual_speech_act_flags.astype(int).tolist()},
+                          "contextual_speech_act": self.contextual_speech_act_flags.astype(int).tolist()
+                          },
                 "values": {"diversity": self.diversity_values,
                            "time": self.time_values,
                            "place": self.place_values,
                            "tone": self.tone_values,
                            "positive_speech_act": self.positive_speech_act_values,
-                           "contextual_speech_act": self.contextual_speech_act_values}
+                           "contextual_speech_act": self.contextual_speech_act_values
+                           }
                 }
 
     def nuance_sentences(self):
@@ -101,7 +103,7 @@ class DialogueNuances:
                     nuance_sentences_dict["time"] = "Information about the moment in which the "\
                                                     "conversation is happening: [" + ', '.join(self.time_values) + "]."
                 else:
-                    nuance_sentences_dict["time"] = "The conversation is taking place during  the " + self.time_values[i] + "."
+                    nuance_sentences_dict["time"] = "The conversation is taking place during the " + self.time_values[i] + "."
             elif elem == "place":
                 i = np.where(self.place_flags == 1.0)[0][0]
                 if i == len(self.place_flags) - 1:
