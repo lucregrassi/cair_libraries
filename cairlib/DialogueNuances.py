@@ -10,14 +10,17 @@ class DialogueNuances:
         self.diversity_matrix = np.array(nuance_matrices["diversity"])
         self.diversity_flags = np.array(nuance_vectors["flags"]["diversity"])
         self.diversity_values = nuance_vectors["values"]["diversity"]
+        self.diversity_fields = ["nationality", "mental condition", "physical condition"]
         # Time
         self.time_matrix = np.array(nuance_matrices["time"])
         self.time_flags = np.array(nuance_vectors["flags"]["time"])
         self.time_values = nuance_vectors["values"]["time"]
+        self.time_fields = ["timeofday", "season", "events"]
         # Place
         self.place_matrix = np.array(nuance_matrices["place"])
         self.place_flags = np.array(nuance_vectors["flags"]["place"])
         self.place_values = nuance_vectors["values"]["place"]
+        self.place_fields = ["environment", "city", "nation"]
         # Tone
         self.tone_matrix = np.array(nuance_matrices["tone"])
         self.tone_flags = np.array(nuance_vectors["flags"]["tone"])
@@ -92,38 +95,38 @@ class DialogueNuances:
             if elem == "diversity":
                 i = np.where(self.diversity_flags == 1.0)[0][0]
                 if i == len(self.diversity_flags) - 1:
-                    nuance_sentences_dict["diversity"] = "Information about " \
+                    nuance_sentences_dict["diversity"] = "Optional: information about " \
                                                      "the person you are interacting with: [" + ', '.join(self.diversity_values) + "]."
                 else:
-                    nuance_sentences_dict["diversity"] = "The person you are interacting with is " + \
+                    nuance_sentences_dict["diversity"] = "Compulsory: the person you are interacting with is " + \
                                                          self.diversity_values[i] + "."
             elif elem == "time":
                 i = np.where(self.time_flags == 1.0)[0][0]
                 if i == len(self.time_flags) - 1:
-                    nuance_sentences_dict["time"] = "Information about the moment in which the "\
+                    nuance_sentences_dict["time"] = "Optional: information about the moment in which the "\
                                                     "conversation is happening: [" + ', '.join(self.time_values) + "]."
                 else:
-                    nuance_sentences_dict["time"] = "The conversation is taking place during the " + self.time_values[i] + "."
+                    nuance_sentences_dict["time"] = "Compulsory: the conversation is taking place during the " + self.time_values[i] + "."
             elif elem == "place":
                 i = np.where(self.place_flags == 1.0)[0][0]
                 if i == len(self.place_flags) - 1:
-                    nuance_sentences_dict["place"] = "Information about the place in which the " \
+                    nuance_sentences_dict["place"] = "Optional: information about the place in which the " \
                                                 "conversation is happening: [" + ', '.join(self.place_values) + "]."
                 else:
-                    nuance_sentences_dict["place"] = "The conversation is taking place in " + self.place_values[i] + "."
+                    nuance_sentences_dict["place"] = "Compulsory: the conversation is taking place in " + self.place_values[i] + "."
             elif elem == "tone":
                 i = np.where(self.tone_flags == 1.0)[0][0]
                 if i == len(self.tone_flags) - 1:
-                    nuance_sentences_dict["tone"] = "You have to use a " + self.tone_values[i] + " tone."
+                    nuance_sentences_dict["tone"] = "Compulsory: you have to use a " + self.tone_values[i] + " tone."
                 else:
-                    nuance_sentences_dict["tone"] = "You have to use a " + self.tone_values[i] + " tone."
+                    nuance_sentences_dict["tone"] = "Compulsory: you have to use a " + self.tone_values[i] + " tone."
             elif elem == "positive_speech_act":
                 i = np.where(self.positive_speech_act_flags == 1.0)[0][0]
                 if i == len(self.positive_speech_act_flags) - 1:
                     nuance_sentences_dict["positive_speech_act"] = "You can use one of the speech acts in the following " \
                                                                "list: [" + ', '.join(self.positive_speech_act_values) + "] "
                 else:
-                    nuance_sentences_dict["positive_speech_act"] = "You have to use the " + \
+                    nuance_sentences_dict["positive_speech_act"] = "You must use the " + \
                                                                    self.positive_speech_act_values[i] + " speech act "
             elif elem == "contextual_speech_act":
                 i = np.where(self.contextual_speech_act_flags == 1.0)[0][0]
@@ -131,7 +134,7 @@ class DialogueNuances:
                     nuance_sentences_dict["contextual_speech_act"] = "You can use one of the speech acts in the following " \
                                                                "list: [" + ', '.join(self.contextual_speech_act_values) + "] "
                 else:
-                    nuance_sentences_dict["contextual_speech_act"] = "You have to use the " + \
+                    nuance_sentences_dict["contextual_speech_act"] = "You must use the " + \
                                                                      self.contextual_speech_act_values[i] + " speech act "
       
         print(nuance_sentences_dict)
