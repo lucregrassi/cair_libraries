@@ -136,7 +136,5 @@ class DialogueNuances:
                 else:
                     nuance_sentences_dict["contextual_speech_act"] = "You must use the " + \
                                                                      self.contextual_speech_act_values[i] + " speech act "
-      
-        print(nuance_sentences_dict)
         return nuance_sentences_dict
 
