@@ -1,3 +1,12 @@
+"""
+Authors:     Lucrezia Grassi (concept, design and code writing),
+             Carmine Tommaso Recchiuto (concept and design),
+             Antonio Sgorbissa (concept and design)
+Email:       lucrezia.grassi@edu.unige.it
+Affiliation: RICE, DIBRIS, University of Genoa, Italy
+
+This file contains the class TurnPiece and Dialogue turn modelling the information related to each conversation turn
+"""
 import copy
 import xml.etree.ElementTree as ET
 

@@ -1,4 +1,12 @@
-import numpy
+"""
+Authors:     Lucrezia Grassi (concept, design and code writing),
+             Carmine Tommaso Recchiuto (concept and design),
+             Antonio Sgorbissa (concept and design)
+Email:       lucrezia.grassi@edu.unige.it
+Affiliation: RICE, DIBRIS, University of Genoa, Italy
+
+This file contains the class DialogueStatistics modelling the statistics of the dialogue
+"""
 import numpy as np
 import copy
 

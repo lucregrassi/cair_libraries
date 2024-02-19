@@ -1,3 +1,12 @@
+"""
+Authors:     Lucrezia Grassi (concept, design and code writing),
+             Carmine Tommaso Recchiuto (concept and design),
+             Antonio Sgorbissa (concept and design)
+Email:       lucrezia.grassi@edu.unige.it
+Affiliation: RICE, DIBRIS, University of Genoa, Italy
+
+This file contains the class Utils containing crucial methods used by the CAIR server
+"""
 from cairlib.DialogueStatistics import DialogueStatistics
 from cairlib.SpeakerInfo import SpeakerInfo
 import requests
