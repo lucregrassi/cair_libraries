@@ -1,9 +1,9 @@
 from setuptools import find_packages, setup
 setup(
-    name='cairlib',
-    packages=find_packages(include=['cairlib']),
+    name='cair_libraries',
+    packages=find_packages(include=['cair_libraries']),
     version='0.1.0',
-    description='CAIR library for creating a client',
+    description='CAIR libraries',
     author='Lucrezia Grassi',
     license='MIT',
     install_requires=["numpy"],
