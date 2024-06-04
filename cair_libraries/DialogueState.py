@@ -20,7 +20,7 @@ class DialogueState:
         self.sentence_type = None
         self.pattern = None
         self.bool = None
-        self.familiarities = None
+        self.likelinesses = None
         self.flags = None
         self.addressed_community = None
         self.dialogue_nuances = None
