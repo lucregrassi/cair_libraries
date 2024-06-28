@@ -216,24 +216,7 @@ class Utils:
             sentence = []
             chosen_sentence = random.choice(candidate_sentences)
             # If the sentence is a question...
-            if sentence_type == 'q':
-                # If the familiarity is not 0, once every 5 times add a common sentence of type q before the question
-                # If the familiarity of the topic is zero, add a sentence before (containing the name of the prev speaker)
-                if topic_familiarity == 0.0:
-                    sentence.append(['zq', random.choice(ontology.common_sent_dict['zq'])])
-                # Once every 5 times add a more complex bq, while all the other times, just add the most simple one (the
-                # first one, which contains only the vocative (4 times over 5)
-                if random.random() < 0.2:
-                    # Append the question without the vocative after the bq sentence (that already contains it)
-                    sentence.append(['bq', random.choice(ontology.common_sent_dict['bq'][1:])])
-                else:
-                    # If there is no sentence before the question, add the first bq sentence that contains only the vocative
-                    sentence.append(['bq', ontology.common_sent_dict['bq'][0]])
-                # In any case, add the question afterwards (without $desspk)
-                sentence.append(['q', chosen_sentence])
-
-            # If the sentence is w, g, or c, add a vocative before
-            elif sentence_type == 'w' or sentence_type == 'g' or sentence_type == 'c':
+            if sentence_type in ['q', 'w', 'g', 'c']:
                 sentence.append([sentence_type, "$desspk " + chosen_sentence])
             # If the sentence type is p or n, add $prevspk before
             # TODO: if the topic had familiarity 1, the p is preceded by ka, hence $prevspk should not be added
