@@ -175,8 +175,12 @@ class Utils:
                 nxt_topic = self.incremental_familiarity_based_choice(topics_matching_first_keyword, familiarities, True)
         return nxt_topic
 
-    def choose_pattern(self, topic_n, topics_familiarity, ontology, provide_opinion):
-        with open(ontology.folder_name + "/patterns.txt", 'rb') as file:
+    def choose_pattern(self, topic_n, ontology, topics_familiarity=None, provide_opinion=None):
+        try:
+            folder_name = ontology.folder_name
+        except AttributeError:
+            folder_name = ontology
+        with open(folder_name + "/patterns.txt", 'rb') as file:
             patterns = pickle.load(file)
 
         print("Choosing pattern for topic ", topic_n)
@@ -184,11 +188,12 @@ class Utils:
         pattern = random.choice(patterns)
 
         # If the topic has familiarity 1 do not take questions into consideration
-        if topics_familiarity[topic_n] == 1.0 or provide_opinion:
-            print("Topic familiarity is 1 or user requested an opinion. "
-                  "Delete question from pattern, and add a positive at the beginning.")
-            pattern = [x for x in pattern if x != 'q']
-            pattern.insert(0, 'p')
+        if topics_familiarity is not None:
+            if topics_familiarity[topic_n] == 1.0 or provide_opinion:
+                print("Topic familiarity is 1 or user requested an opinion. "
+                      "Delete question from pattern, and add a positive at the beginning.")
+                pattern = [x for x in pattern if x != 'q']
+                pattern.insert(0, 'p')
         sentence_type = pattern[0]
         prev_topic_pattern = copy.deepcopy(pattern[1:])
 
@@ -290,7 +295,7 @@ class Utils:
             # If there are children/brothers with familiarity != 0, jump to one of them
             if topic_n != -1:
                 prev_topic_number = topic_n
-                sentence_type, prev_topic_pattern = self.choose_pattern(topic_n, topics_familiarity, ontology, False)
+                sentence_type, prev_topic_pattern = self.choose_pattern(topic_n, ontology, topics_familiarity, False)
             # If there are no children/brothers or no children/brothers with familiarity != 0
             else:
                 reached_DT_bottom = True
@@ -312,7 +317,7 @@ class Utils:
                 if topic_n != -1:
                     print("A valid topic has been found! Jump to that")
                     prev_topic_number = topic_n
-                    sentence_type, prev_topic_pattern = self.choose_pattern(topic_n, topics_familiarity, ontology,
+                    sentence_type, prev_topic_pattern = self.choose_pattern(topic_n, ontology, topics_familiarity,
                                                                             False)
                 # Random number is between 0.45 and 1 - or there are no brothers/top concepts with l != 0
                 else:
