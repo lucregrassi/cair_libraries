@@ -244,10 +244,12 @@ class Utils:
                 # Call the function again with the all the flags set to zero
                 return self.choose_sentence(sentence_type, topic_n, ontology, topic_sentences_flags, topic_familiarity)
 
-    # This function explores the DT based on the pattern. If the pattern is empty (the current topic is over), this 
+    # This function explores the DT based on the pattern. If the pattern is empty (the current topic is over), this
     # function chooses a new topic and a new pattern for the topic (always starting with a question)
-    def explore_DT(self, prev_topic_number, prev_topic_pattern, prev_topic_stop, ontology, topics_familiarity, negative):
+    def explore_DT(self, prev_topic_number, prev_topic_pattern, prev_topic_stop, ontology, topics_familiarity,
+                   negative):
         print("Prev topic number:", prev_topic_number)
+        reached_DT_bottom = False
         # If the pattern is not finished, continue
         if prev_topic_pattern:
             print("Previous topic still has a pattern: ", prev_topic_pattern)
@@ -276,13 +278,13 @@ class Utils:
                 else:
                     # Do not allow choosing brothers with familiarity zero
                     topic_n = self.incremental_familiarity_based_choice(ontology.topics_brothers[prev_topic_number],
-                                                                       topics_familiarity, False)
+                                                                        topics_familiarity, False)
                     prev_topic_stop = True
                     print("First NEGATIVE answer: CHOOSE NEW TOPIC AMONG BROTHERS")
             else:
                 # Do not allow choosing children with familiarity zero
                 topic_n = self.incremental_familiarity_based_choice(ontology.topics_children[prev_topic_number],
-                                                                   topics_familiarity, False)
+                                                                    topics_familiarity, False)
                 print("** DESCEND THE DT: CHOOSE NEW TOPIC AMONG CHILDREN")
 
             # If there are children/brothers with familiarity != 0, jump to one of them
@@ -291,6 +293,7 @@ class Utils:
                 sentence_type, prev_topic_pattern = self.choose_pattern(topic_n, topics_familiarity, ontology, False)
             # If there are no children/brothers or no children/brothers with familiarity != 0
             else:
+                reached_DT_bottom = True
                 top_concept = False
                 brother = False
                 print("No children/brothers (one no)/father's brothers (two no) - or none with non zero familiarity")
@@ -301,7 +304,7 @@ class Utils:
                     print("** CHOOSING AMONG BROTHERS with familiarity different from zero")
                     brother = True
                     topic_n = self.incremental_familiarity_based_choice(ontology.topics_brothers[prev_topic_number],
-                                                                  topics_familiarity, False)
+                                                                        topics_familiarity, False)
                 elif 0.1 <= rand_n < 0.45:
                     print("** CHOOSING AMONG TOP CONCEPTS with familiarity different from zero")
                     top_concept = True
@@ -309,7 +312,8 @@ class Utils:
                 if topic_n != -1:
                     print("A valid topic has been found! Jump to that")
                     prev_topic_number = topic_n
-                    sentence_type, prev_topic_pattern = self.choose_pattern(topic_n, topics_familiarity, ontology, False)
+                    sentence_type, prev_topic_pattern = self.choose_pattern(topic_n, topics_familiarity, ontology,
+                                                                            False)
                 # Random number is between 0.45 and 1 - or there are no brothers/top concepts with l != 0
                 else:
                     print("** FINAL SENTENCE")
@@ -317,4 +321,4 @@ class Utils:
                     sentence_type = 'e'
                     prev_topic_pattern = []
 
-        return sentence_type, prev_topic_pattern, topic_n, prev_topic_stop
+        return sentence_type, prev_topic_pattern, topic_n, prev_topic_stop, reached_DT_bottom
