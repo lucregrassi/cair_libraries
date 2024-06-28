@@ -138,7 +138,7 @@ class DialogueNuances:
                     nuance_sentences_dict["positive_speech_act"] = "You can use one of the speech acts in the following " \
                                                                "list: [" + ', '.join(self.positive_speech_act_values) + "] "
                 else:
-                    nuance_sentences_dict["positive_speech_act"] = "You must use the " + \
+                    nuance_sentences_dict["positive_speech_act"] = "If you want, you can use the " + \
                                                                    self.positive_speech_act_values[i] + " speech act "
             elif elem == "contextual_speech_act":
                 i = np.where(self.contextual_speech_act_flags == 1.0)[0][0]
@@ -146,7 +146,7 @@ class DialogueNuances:
                     nuance_sentences_dict["contextual_speech_act"] = "You can use one of the speech acts in the following " \
                                                                "list: [" + ', '.join(self.contextual_speech_act_values) + "] "
                 else:
-                    nuance_sentences_dict["contextual_speech_act"] = "You must use the " + \
+                    nuance_sentences_dict["contextual_speech_act"] = "If you want, you can use the " + \
                                                                      self.contextual_speech_act_values[i] + " speech act "
         return nuance_sentences_dict
 
