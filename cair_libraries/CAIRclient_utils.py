@@ -93,7 +93,7 @@ class Utils:
             # Keep on trying to perform requests to the server until it is reachable.
             while not dialogue_state:
                 resp = requests.post("http://" + self.server_ip + ":" + self.port + "/CAIR_hub/start", json=json_language,
-                                    verify=False)
+                                     verify=False)
                 dialogue_state = resp.json()['dialogue_state']
                 time.sleep(1)
         # Store the dialogue state in the corresponding file
@@ -195,7 +195,7 @@ class Utils:
         client_registration_socket.send(b"new_profile_enrollment")
         # Wait for the completion of the enrollment
         print("*** Listening ***")
-        client_registration_socket.recv(256).decode('utf-8')
+        client_registration_socket.recv(1024).decode('utf-8')
         if language == "it-IT":
             to_say = "S: Grazie per aver completato la registrazione " + new_profile_name + \
                      "! D'ora in poi riconoscerò la tua voce!"
