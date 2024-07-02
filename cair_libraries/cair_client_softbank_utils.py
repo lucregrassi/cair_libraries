@@ -9,8 +9,8 @@ Affiliation: RICE, DIBRIS, University of Genoa, Italy
 
 This file contains the class Utils containing crucial methods used by the CAIR server
 """
-from cair_libraries.DialogueStatistics import DialogueStatistics
-from cair_libraries.SpeakerInfo import SpeakerInfo
+from cair_libraries.dialogue_statistics import DialogueStatistics
+from cair_libraries.speaker_info import SpeakerInfo
 import requests
 import json
 import time
@@ -20,7 +20,7 @@ import qi
 from naoqi import ALProxy
 
 
-class Utils(object):
+class ClientUtils(object):
     def __init__(self, logger):
         super(Utils, self).__init__()
         self.logger = logger

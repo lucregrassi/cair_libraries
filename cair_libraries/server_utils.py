@@ -12,7 +12,7 @@ import random
 import copy
 
 
-class Utils:
+class ServerUtils:
     def __init__(self):
         pass
 
