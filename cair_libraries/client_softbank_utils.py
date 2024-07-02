@@ -20,9 +20,9 @@ import qi
 from naoqi import ALProxy
 
 
-class ClientUtils(object):
+class SoftBankClientUtils(object):
     def __init__(self, logger):
-        super(Utils, self).__init__()
+        super(SoftBankClientUtils, self).__init__()
         self.logger = logger
         self.memory = ALProxy("ALMemory")
         self.server_port = self.memory.getData("CAIR/server_port")
