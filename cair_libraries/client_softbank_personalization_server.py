@@ -12,6 +12,8 @@ class PersonalizationServer(object):
         self.port = port
         self.scheduled_interventions = []
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        # Allow reusing the same IP address and port
+        self.server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.server_socket.bind((self.host, self.port))
         self.server_socket.listen(5)
         self.server_thread = None
@@ -28,18 +30,22 @@ class PersonalizationServer(object):
         self.logger.info("Server running on " + str(self.host) + ":" + str(self.port))
         while self.running:
             try:
+                self.logger.info("Waiting on accept for a new connection")
                 client_socket, addr = self.server_socket.accept()
-                with client_socket:
+                self.logger.info("Accepted connection on address: " + str(addr))
+                try:
                     data = client_socket.recv(1024)
                     if not data:
+                        self.logger.info("No data received, returning.")
+                        client_socket.close()
                         return
                     try:
                         request = json.loads(data.decode('utf-8'))
                         if "scheduled_interventions" in request:
                             with self.lock:
                                 self.logger.info("Received data: " + json.dumps(request))
+                                # Save received data
                                 self.scheduled_interventions = request["scheduled_interventions"]
-                                # Process the received data
                                 response = {"message": "Data received successfully"}
                                 client_socket.sendall(json.dumps(response).encode('utf-8'))
                         else:
@@ -50,19 +56,31 @@ class PersonalizationServer(object):
                         response = {"error": "Invalid JSON"}
                         self.scheduled_interventions = []
                         client_socket.sendall(json.dumps(response).encode('utf-8'))
+                    client_socket.close()
+                except socket.error as e:
+                    if self.running:
+                        self.logger.info("Socket error: " + str(e))
+                    else:
+                        self.logger.info("Socket closed!")
+                    break
             except socket.error as e:
                 if self.running:
                     self.logger.info("Socket error: " + str(e))
                 else:
                     self.logger.info("Socket closed!")
                 break
-        self.logger.info("Server running on " + str(self.host) + ":" + str(self.port))
+        self.logger.info("Server stopped")
 
     def stop_server(self):
         self.running = False
         self.server_socket.close()
+        self.logger.info("Socket server closed")
         if self.server_thread:
+            self.logger.info("Joining server thread")
             self.server_thread.join()
+            self.logger.info("Server thread joined")
+            
+        self.logger.info("exiting...")
 
     # This method checks for interventions that are due based on their timestamp.
     # Interventions can be either fixed or periodic:
