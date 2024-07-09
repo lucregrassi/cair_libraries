@@ -18,9 +18,9 @@ class AlteregoClientUtils:
         self.server_ip = server_ip
         self.registration_ip = registration_ip
         self.port = port
-        self.dialogue_state_file_path = "session_data/dialogue_state.json"
-        self.speakers_info_file_path = "session_data/speakers_info.json"
-        self.dialogue_statistics_file_path = "session_data/dialogue_statistics.json"
+        self.dialogue_state_file_path = "dialogue_state.json"
+        self.speakers_info_file_path = "speakers_info.json"
+        self.dialogue_statistics_file_path = "dialogue_statistics.json"
 
     def process_sentence(self, sentence, speakers_info):
         sentence = self.replace_schwa(sentence, speakers_info)
