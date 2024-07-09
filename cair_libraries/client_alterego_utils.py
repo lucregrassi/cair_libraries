@@ -5,7 +5,6 @@ import json
 import time
 import socket
 import string
-import os
 import rospkg
 
 rp = rospkg.RosPack()
