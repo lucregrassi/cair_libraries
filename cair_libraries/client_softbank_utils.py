@@ -110,8 +110,8 @@ class ClientUtils(object):
     def acquire_initial_state(self, language):
         json_language = {"language": language}
         # Try to contact the server and retry until the dialogue state is received
-        resp = requests.post("http://" + self.server_ip + ":" + self.server_port + "/CAIR_hub/start", json=json_language,
-                             verify=False)
+        resp = requests.post("http://" + self.server_ip + ":" + self.server_port + "/CAIR_hub/start", data=json_language,
+                             headers={'Content-Type': 'application/json'}, verify=self.certificate)
         print(resp)
         first_dialogue_sentence = resp.json()["first_sentence"]
         dialogue_state = resp.json()['dialogue_state']
@@ -121,8 +121,8 @@ class ClientUtils(object):
             self.animated_speech.say(self.voice_speed + "I'm waiting for the server...", self.configuration)
             # Keep on trying to perform requests to the server until it is reachable.
             while not dialogue_state:
-                resp = requests.post("http://" + self.server_ip + ":" + self.server_port + "/CAIR_hub/start", json=json_language,
-                                     verify=self.certificate)
+                resp = requests.post("http://" + self.server_ip + ":" + self.server_port + "/CAIR_hub/start", data=json_language,
+                                     headers={'Content-Type': 'application/json'}, verify=self.certificate)
                 dialogue_state = resp.json()['dialogue_state']
                 time.sleep(1)
         # Store the dialogue state in the corresponding file

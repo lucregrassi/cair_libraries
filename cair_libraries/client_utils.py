@@ -94,7 +94,7 @@ class ClientUtils:
             # Keep on trying to perform requests to the server until it is reachable.
             while not dialogue_state:
                 resp = requests.post("http://" + self.server_ip + ":" + self.port + "/CAIR_hub/start", json=json_language,
-                                     verify=False)
+                                     verify=self.certificate)
                 dialogue_state = resp.json()['dialogue_state']
                 time.sleep(1)
         # Store the dialogue state in the corresponding file
