@@ -21,7 +21,7 @@ from naoqi import ALProxy
 
 
 class ClientUtils(object):
-    def __init__(self, logger):
+    def __init__(self, logger, certificate):
         super(ClientUtils, self).__init__()
         self.logger = logger
         self.memory = ALProxy("ALMemory")
@@ -38,6 +38,7 @@ class ClientUtils(object):
                                        "/speakers_info.json"
         self.dialogue_statistics_file_path = "/data/home/nao/.local/share/PackageManager/apps/" + self.app_name + \
                                              "/dialogue_statistics.json"
+        self.certificate = certificate
 
         try:
             # self.voice_speed = "\\RSPD=100\\"
@@ -121,7 +122,7 @@ class ClientUtils(object):
             # Keep on trying to perform requests to the server until it is reachable.
             while not dialogue_state:
                 resp = requests.post("http://" + self.server_ip + ":" + self.server_port + "/CAIR_hub/start", json=json_language,
-                                     verify=False)
+                                     verify=self.certificate)
                 dialogue_state = resp.json()['dialogue_state']
                 time.sleep(1)
         # Store the dialogue state in the corresponding file
