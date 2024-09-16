@@ -39,6 +39,7 @@ class ClientUtils(object):
         self.dialogue_statistics_file_path = "/data/home/nao/.local/share/PackageManager/apps/" + self.app_name + \
                                              "/dialogue_statistics.json"
         self.certificate = certificate
+        self.BASE_CAIR_hub_start = "https://" + self.server_ip + ":" + self.server_port + "/CAIR_hub/start"
 
         try:
             # self.voice_speed = "\\RSPD=100\\"
