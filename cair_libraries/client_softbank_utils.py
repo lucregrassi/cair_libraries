@@ -108,9 +108,8 @@ class ClientUtils(object):
 
     # This method performs a GET request to the cloud to get the initial sentence and the dialogue state that will be used
     # for all the speakers. Then, it initializes the speakers stats and speakers info data for the unknown speaker
-    def acquire_initial_state(self, language):
-        json_language = {"language": language}
-        json_data = json.dumps(json_language)
+    def acquire_initial_state(self, language, openai_api_key):
+        json_data = json.dumps({"language": language, "openai_api_key": openai_api_key})
         # Try to contact the server and retry until the dialogue state is received
         resp = requests.post(self.BASE_CAIR_hub_start, data=json_data, headers={'Content-Type': 'application/json'},
                              verify=self.certificate)
