@@ -15,3 +15,7 @@ To install the library go inside the created dist folder and run:
 pip install <name_of_wheelfile.whl>
 ```
 
+Alternatively, you can directly install the library from GitHub:
+```
+pip install git+https://github.com/lucregrassi/cair_libraries.git@v4.0#egg=cair_libraries
+```
