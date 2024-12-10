@@ -23,6 +23,7 @@ class AlteregoClientUtils:
         self.speakers_info_file_path = os.path.join(folder_path, "speakers_info.json")
         self.dialogue_statistics_file_path = os.path.join(folder_path, "dialogue_statistics.json")
         self.certificate = certificate
+        self.BASE_CAIR_hub_start = "https://" + self.server_ip + ":" + self.port + "/CAIR_hub/start"
 
     def process_sentence(self, sentence, speakers_info):
         sentence = self.replace_schwa(sentence, speakers_info)
@@ -77,10 +78,10 @@ class AlteregoClientUtils:
 
     # This method performs a GET request to the cloud to get the initial sentence and the dialogue state that will be used
     # for all the speakers. Then, it initializes the speakers stats and speakers info data for the unknown speaker
-    def acquire_initial_state(self, language):
-        json_language = {"language": language}
+    def acquire_initial_state(self, language, openai_api_key):
+        json_data = json.dumps({"language": language, "openai_api_key": openai_api_key})
         # Try to contact the server and retry until the dialogue state is received
-        resp = requests.post("http://" + self.server_ip + ":" + self.port + "/CAIR_hub/start", json=json_language,
+        resp = requests.post(self.BASE_CAIR_hub_start, data=json_data, headers={'Content-Type': 'application/json'},
                              verify=self.certificate)
         print(resp)
         first_dialogue_sentence = resp.json()["first_sentence"]
@@ -91,8 +92,8 @@ class AlteregoClientUtils:
             print("S: Waiting for the CAIR server to provide the dialogue state...")
             # Keep on trying to perform requests to the server until it is reachable.
             while not dialogue_state:
-                resp = requests.post("http://" + self.server_ip + ":" + self.port + "/CAIR_hub/start", json=json_language,
-                                     verify=False)
+                resp = requests.post(self.BASE_CAIR_hub_start, data=json_data,
+                                     headers={'Content-Type': 'application/json'}, verify=self.certificate)
                 dialogue_state = resp.json()['dialogue_state']
                 time.sleep(1)
         # Store the dialogue state in the corresponding file
