@@ -26,6 +26,7 @@ class DialogueState:
         self.dialogue_nuances = None
         self.conversation_history = None
         self.ongoing_conversation = None
+        self.formal_language = None
         self.__dict__ = copy.deepcopy(d)
 
     def to_dict(self):
