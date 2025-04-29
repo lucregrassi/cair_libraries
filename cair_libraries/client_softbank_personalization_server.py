@@ -122,9 +122,9 @@ class PersonalizationServer(object):
         else:
             counter = due_intervention["counter"]
 
-        # Ensure counter cycles within the list length to prevent IndexError and return result
+        # Ensure counter cycles within the list length to prevent IndexError and a return result
         if "topics" in due_intervention and due_intervention["topics"]:
-            result = {'type': 'topic', 'sentence': due_intervention["topics"][counter]["name"],
+            result = {'type': 'topic', 'sentence': due_intervention["topics"][counter]["sentence"],
                       'exclusive': due_intervention["topics"][counter]["exclusive"]}
             counter += 1
             counter %= len(due_intervention["topics"])
