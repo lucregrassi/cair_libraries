@@ -253,6 +253,7 @@ class ServerUtils:
     # function chooses a new topic and a new pattern for the topic (always starting with a question)
     def explore_DT(self, prev_topic_number, prev_topic_pattern, prev_topic_stop, ontology, topics_familiarity,
                    negative):
+        random.seed(time.time_ns() + os.getpid())
         print("Prev topic number:", prev_topic_number)
         reached_DT_bottom = False
         # If the pattern is not finished, continue
@@ -305,12 +306,12 @@ class ServerUtils:
                 rand_n = random.uniform(0.0, 1.0)
                 print("Random number to decide what to do:", rand_n)
 
-                if rand_n < 0.1:
+                if rand_n < 0.4:
                     print("** CHOOSING AMONG BROTHERS with familiarity different from zero")
                     brother = True
                     topic_n = self.incremental_familiarity_based_choice(ontology.topics_brothers[prev_topic_number],
                                                                         topics_familiarity, False)
-                elif 0.1 <= rand_n < 0.45:
+                elif 0.4 <= rand_n < 0.7:
                     print("** CHOOSING AMONG TOP CONCEPTS with familiarity different from zero")
                     top_concept = True
                     topic_n = self.incremental_familiarity_based_choice(ontology.top_topics, topics_familiarity, False)
@@ -319,7 +320,6 @@ class ServerUtils:
                     prev_topic_number = topic_n
                     sentence_type, prev_topic_pattern = self.choose_pattern(topic_n, ontology, topics_familiarity,
                                                                             False)
-                # Random number is between 0.45 and 1 - or there are no brothers/top concepts with l != 0
                 else:
                     print("** FINAL SENTENCE")
                     topic_n = prev_topic_number
