@@ -308,15 +308,15 @@ class ServerUtils:
                 rand_n = random.uniform(0.0, 1.0)
                 print("Random number to decide what to do:", rand_n)
 
-                if rand_n < 0.4:
+                if rand_n < 0.7:
+                    print("** CHOOSING AMONG TOP CONCEPTS with familiarity different from zero")
+                    top_concept = True
+                    topic_n = self.incremental_familiarity_based_choice(ontology.top_topics, topics_familiarity, False)
+                elif 0.7 <= rand_n < 0.85:
                     print("** CHOOSING AMONG BROTHERS with familiarity different from zero")
                     brother = True
                     topic_n = self.incremental_familiarity_based_choice(ontology.topics_brothers[prev_topic_number],
                                                                         topics_familiarity, False)
-                elif 0.4 <= rand_n < 0.7:
-                    print("** CHOOSING AMONG TOP CONCEPTS with familiarity different from zero")
-                    top_concept = True
-                    topic_n = self.incremental_familiarity_based_choice(ontology.top_topics, topics_familiarity, False)
                 if topic_n != -1:
                     print("A valid topic has been found! Jump to that")
                     prev_topic_number = topic_n
