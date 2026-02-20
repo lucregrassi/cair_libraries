@@ -102,7 +102,7 @@ class ClientUtils:
         with open(self.dialogue_state_file_path, 'w') as f:
             json.dump(dialogue_state, f, ensure_ascii=False, indent=4)
 
-        profile_id = "00000000-0000-0000-0000-000000000000"
+        profile_id = "unknown"
         # Add the info of the new profile to the file where the key is the profile id and the values are the info (name)
         with open(self.speakers_info_file_path, 'w') as f:
             if language == "it-IT":
