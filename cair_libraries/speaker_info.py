@@ -11,12 +11,13 @@ import copy
 
 
 class SpeakerInfo:
-    def __init__(self, profile_id=None, name=None, gender=None, age=None, d=None):
+    def __init__(self, profile_id=None, name=None, gender=None, age=None, role=None, d=None):
         if profile_id:
             self.profile_id = profile_id
             self.name = name
             self.gender = gender
             self.age = age
+            self.role = role
         if d:
             self.__dict__ = copy.deepcopy(d)
 
