@@ -109,7 +109,7 @@ class ClientUtils:
                 user_name = "Utente"
             else:
                 user_name = "User"
-            json.dump({profile_id: {"name": user_name, "gender": 'nb', "age": "nd"}},
+            json.dump({profile_id: {"name": user_name, "gender": 'nb', "age": "nd", "role": ""}},
                       f, ensure_ascii=False, indent=4)
 
         # Initialize dialogue statistics
