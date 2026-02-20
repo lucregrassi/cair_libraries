@@ -47,7 +47,7 @@ class DialogueStatistics:
         for i, turn_piece in enumerate(dialogue_turn.turn_pieces):
             profile_id = turn_piece.profile_id
             # Do not consider generic user in the moving window
-            if profile_id != "00000000-0000-0000-0000-000000000000":
+            if profile_id != "unknown":
                 if self.moving_window:
                     time = self.get_moving_window_total_time()
                     while (time + float(turn_piece.speaking_time) - float(self.moving_window[0]["speaking_time"])) > \
