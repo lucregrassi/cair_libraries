@@ -23,8 +23,6 @@ class DialogueStatistics:
             self.same_turn = [[0]]
             # Matrix containing who talked after who in successive turns
             self.successive_turn = [[0]]
-            # Matrix containing the average topic distance between two speakers
-            self.average_topic_distance = [[0.0]]
             # Total number of turns for each speaker
             self.speakers_turns = [0]
             # A priori probability that a speaker talks
@@ -113,7 +111,6 @@ class DialogueStatistics:
         # For each element in the speakers_stats dictionary, add the new elements
         self.same_turn = self.increase_matrix_size(self.same_turn, int)
         self.successive_turn = self.increase_matrix_size(self.successive_turn, int)
-        self.average_topic_distance = self.increase_matrix_size(self.average_topic_distance, float)
         self.mapping_index_speaker.append(profile_id)
         self.speakers_turns.append(0)
         self.a_priori_prob.append(0.0)
@@ -131,24 +128,6 @@ class DialogueStatistics:
             for elem in self.speakers_turns[1:]:
                 registered_speakers_turns = registered_speakers_turns + int(elem)
         return registered_speakers_turns
-
-    def update_average_topic_distance(self, prev_speaker_id, prev_speaker_topic, current_speaker_id,
-                                      current_speaker_topic, ontology):
-        # Compute the distance between the new conversation topic of the speaker who talked now and the conversation
-        # topic of the previous speaker - update the matrix before sending it back to the client
-        row = self.mapping_index_speaker.index(prev_speaker_id)
-        col = self.mapping_index_speaker.index(current_speaker_id)
-        successive_turns = self.successive_turn[row][col]
-
-        # Compute the distance between the two topics
-        topic_distance = ontology.distance_between_two_topics(prev_speaker_topic, current_speaker_topic)
-        print("Distance from previous topic:", topic_distance)
-        # Previous average topic distance of the two speakers
-        prev_avg_topic_distance = self.average_topic_distance[row][col]
-        # Update average topic distance by multiplying the previous average for the number of successive turns
-        # minus one, then adding the computed topic distance, and dividing for the number of successive turns
-        self.average_topic_distance[row][col] = \
-            ((prev_avg_topic_distance * (successive_turns - 1)) + topic_distance) / successive_turns
 
     # This method returns the number of times a specific speaker has spoken in the moving window
     def get_moving_window_speaker_turns(self, profile_id):

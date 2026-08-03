@@ -109,7 +109,7 @@ class ClientUtils:
                 user_name = "Utente"
             else:
                 user_name = "User"
-            json.dump({profile_id: {"name": user_name, "gender": 'nb', "age": "nd"}},
+            json.dump({profile_id: {"name": user_name, "gender": 'nb', "age": "nd", "role": ""}},
                       f, ensure_ascii=False, indent=4)
 
         # Initialize dialogue statistics
@@ -135,8 +135,8 @@ class ClientUtils:
 
         # Add the info of the new profile to the file where the key is the profile id and the values are the info (name)
         user_gender = new_speaker_info.gender.translate(str.maketrans('', '', string.punctuation)).lower()
-        female_list = ["female", "femmina", "femminile", "donna"]
-        male_list = ["male", "maschio", "maschile", "uomo"]
+        female_list = ["female", "femmina", "femminile", "donna", "f"]
+        male_list = ["male", "maschio", "maschile", "uomo", "m"]
         if any(word in user_gender for word in female_list):
             user_gender = "f"
         elif any(word in user_gender for word in male_list):
